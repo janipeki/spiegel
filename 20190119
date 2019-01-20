@@ -1,0 +1,33 @@
+"""
+Berechnung von n + n * n + n * n * n + ... = n * (1 + n * ( 1 + n * (...
+"""
+import sys
+
+def recCalc( base , result, recursions):
+#   print("recCalc has been called basis: " + str(base) + ", recursion: " + str(recursions) + ", result: " + str(result))
+
+   if result == 0:
+       result = base
+       recursions += 1
+       recCalc (base, result, recursions)
+   else:
+       recursions += 1
+       oldresult = result
+       result = base * ( result + 1 )
+       if oldresult == result:
+           print ("Result after " + str(recursions) + " recursions: " + str(result))
+           return
+       recCalc (base, result, recursions)
+
+if len(sys.argv) == 2:
+    input = sys.argv[1]
+else:
+    input = float(raw_input('Input:'))
+
+try:
+    input = float(input)
+except ValueError:
+    print "Not a number"
+
+sys.setrecursionlimit(10000)
+recCalc (input, 0, 0)
